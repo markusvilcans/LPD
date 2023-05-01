@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyPatrol : MonoBehaviour
+public class SkeletonAI : MonoBehaviour
 {
+    public Transform patrolRouteObject;
     public Transform[] patrolPoints;
     public int targetPoint;
     public float speed;
@@ -12,11 +13,23 @@ public class EnemyPatrol : MonoBehaviour
     private Rigidbody rb;
     Vector3 target;
 
-    void Start()
+void Start()
     {
+        Transform[] waypoints = patrolRouteObject.GetComponentsInChildren<Transform>();
+        List<Transform> tempPatrolPoints = new List<Transform>();
+        foreach(Transform waypoint in waypoints){
+            if(waypoint != patrolRouteObject){
+                tempPatrolPoints.Add(waypoint);
+            }
+        }
+        patrolPoints = tempPatrolPoints.ToArray();
         targetPoint = 0;
         rb = GetComponent<Rigidbody>();
     }
+
+
+
+
 
     void Update()
     {
