@@ -42,15 +42,15 @@ public class PlagueDoctorAI : MonoBehaviour
         if (Vector3.Distance(transform.position, patrolPoints[targetPoint].position) > 0.3f)
         {
             GetComponent<Animator>().SetBool("isWalking", true);
+            Vector3 direction = patrolPoints[targetPoint].position - transform.position;
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
         }
         else
         {
             GetComponent<Animator>().SetBool("isWalking", false);
         }
 
-        Vector3 direction = patrolPoints[targetPoint].position - transform.position;
-        Quaternion targetRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
         transform.position = Vector3.MoveTowards(transform.position, patrolPoints[targetPoint].position, speed * Time.deltaTime);
 
         rb.AddForce(Vector3.down * gravity);
