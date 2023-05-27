@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FOV : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class FOV : MonoBehaviour
     public LayerMask obstructionMask;
     public bool canSeePlayer;
     public float FOVheight = 1.0f; 
-
+    public static bool caught;
     // Spotlight
     public GameObject spotlight;
     public float spotlightIntensity = 200f;
@@ -20,8 +21,8 @@ public class FOV : MonoBehaviour
     public Vector3 spotlightRotationOffset = new Vector3(10f, 0f, 0f);
     float timer = 0f;
 
-    void Start()
-    {
+    void Start(){
+        caught = false;
         //FOV
         playerRef = GameObject.FindGameObjectWithTag("Player");
         StartCoroutine(FOVRoutine());
@@ -41,7 +42,7 @@ public class FOV : MonoBehaviour
     }
 
     private IEnumerator FOVRoutine(){
-        float delay = 0.2f;
+        //float delay = 0.2f;
         WaitForSeconds wait = new WaitForSeconds(0.2f);
         while(true){
             yield return wait;
@@ -75,6 +76,10 @@ public class FOV : MonoBehaviour
             timer += Time.deltaTime;
             if (timer >= 2f) {
                 spotlight.GetComponent<Light>().color = Color.red;
+                if(timer >= 2.3f){
+                    caught = true;
+                    SceneManager.LoadScene(2);
+                }
             } else {
                 spotlight.GetComponent<Light>().color = Color.yellow;
             }
