@@ -5,7 +5,7 @@ using System;
 
 public class Collectible : MonoBehaviour{
     public static event Action OnCollected;
-    public static int total = 2;
+    public static int total = 4;
 
     void OnTriggerEnter(Collider other){
         if (other.CompareTag("Player"))
