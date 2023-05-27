@@ -163,7 +163,9 @@ namespace StarterAssets
 
         private void LateUpdate()
         {
-            CameraRotation();
+            if(!PauseMenu.isPaused){
+                CameraRotation();
+            }
         }
 
         private void AssignAnimationIDs()
