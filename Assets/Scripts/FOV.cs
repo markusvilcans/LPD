@@ -11,6 +11,7 @@ public class FOV : MonoBehaviour
     public LayerMask targetMask;
     public LayerMask obstructionMask;
     public bool canSeePlayer;
+    public float FOVheight = 1.0f; 
 
     // Spotlight
     public GameObject spotlight;
@@ -61,11 +62,12 @@ public class FOV : MonoBehaviour
                     canSeePlayer = true;
                 else
                     canSeePlayer = false;
+                    
             }
             else canSeePlayer = false;
-        }
-        else if(canSeePlayer)
+        } else {
             canSeePlayer = false;
+        }
     }
 
     void Update() {
