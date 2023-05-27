@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpiderAI : MonoBehaviour
+public class AI_Routing : MonoBehaviour
 {
     public Transform patrolRouteObject;
     public Transform[] patrolPoints;
