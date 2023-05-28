@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AI_Routing : MonoBehaviour
-{
+public class AI_Routing : MonoBehaviour{
     public Transform patrolRouteObject;
     public Transform[] patrolPoints;
     public int targetPoint;
@@ -12,11 +11,10 @@ public class AI_Routing : MonoBehaviour
     public float gravity = 20f;
     public float stopTime;
     public float timer = 0f; 
-    private Rigidbody rb;
+    //private Rigidbody rb;
     Vector3 target;
 
-    void Start()
-    {
+    void Start(){
         Transform[] waypoints = patrolRouteObject.GetComponentsInChildren<Transform>();
         List<Transform> tempPatrolPoints = new List<Transform>();
         foreach(Transform waypoint in waypoints){
@@ -26,11 +24,10 @@ public class AI_Routing : MonoBehaviour
         }
         patrolPoints = tempPatrolPoints.ToArray();
         targetPoint = 0;
-        rb = GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
     }
 
-    void Update()
-    {
+    void Update(){
         if (Vector3.Distance(transform.position, patrolPoints[targetPoint].position) < 0.3f){
             timer += Time.deltaTime;
             if (timer >= stopTime) {
@@ -39,25 +36,20 @@ public class AI_Routing : MonoBehaviour
             } 
         }
 
-        if (Vector3.Distance(transform.position, patrolPoints[targetPoint].position) > 0.3f)
-        {
+        if (Vector3.Distance(transform.position, patrolPoints[targetPoint].position) > 0.3f){
             GetComponent<Animator>().SetBool("isWalking", true);
             Vector3 direction = patrolPoints[targetPoint].position - transform.position;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
         }
-        else
-        {
+        else{
             GetComponent<Animator>().SetBool("isWalking", false);
         }
-
         transform.position = Vector3.MoveTowards(transform.position, patrolPoints[targetPoint].position, speed * Time.deltaTime);
-
-        rb.AddForce(Vector3.down * gravity);
+        //rb.AddForce(Vector3.down * gravity);
     }
 
-    void increaseTargetInt()
-    {
+    void increaseTargetInt(){
         targetPoint++;
         if (targetPoint >= patrolPoints.Length)
         {

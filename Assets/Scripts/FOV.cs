@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class FOV : MonoBehaviour
 {
-    //FOV values
     public float radius;
     public float angle;
     public GameObject playerRef;
@@ -14,31 +13,17 @@ public class FOV : MonoBehaviour
     public bool canSeePlayer;
     public float FOVheight = 1.0f; 
     public static bool caught;
-    // Spotlight
-    public GameObject spotlight;
-    public float spotlightIntensity = 200f;
-    public Vector3 spotlightPositionOffset = new Vector3(0f, 1f, 0f);
-    public Vector3 spotlightRotationOffset = new Vector3(10f, 0f, 0f);
-    float timer = 0f;
+    public float timer = 0f;
+    public AIUIManager AIUIManager;
 
     void Start(){
         caught = false;
-        //FOV
         playerRef = GameObject.FindGameObjectWithTag("Player");
         StartCoroutine(FOVRoutine());
-        // Spotlight
-        spotlight = new GameObject("Spotlight");
-        spotlight.transform.parent = transform;
-        spotlight.transform.localPosition = Vector3.zero;
-        spotlight.AddComponent<Light>();
-        spotlight.GetComponent<Light>().type = LightType.Spot;
-        spotlight.GetComponent<Light>().range = radius;
-        spotlight.GetComponent<Light>().spotAngle = angle;
-        spotlight.GetComponent<Light>().intensity = spotlightIntensity;
-        //public spotlightPositionOffset = new Vector3(0f, 1f, 0f); // move the spotlight 1 unit higher
-        //public spotlightRotationOffset = new Vector3(10f, 0f, 0f); // angle the spotlight downwards
-        spotlight.transform.position += spotlightPositionOffset; // apply the new position offset
-        spotlight.transform.rotation *= Quaternion.Euler(spotlightRotationOffset); // apply the new rotation offset
+        
+        AIUIManager = GetComponentInChildren<AIUIManager>();
+        targetMask = LayerMask.GetMask("Target");
+        obstructionMask = LayerMask.GetMask("Obstruction");
     }
 
     private IEnumerator FOVRoutine(){
@@ -51,19 +36,16 @@ public class FOV : MonoBehaviour
     }
 
     private void FieldOfViewCheck(){
-        spotlight.GetComponent<Light>().color = Color.green;
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, targetMask);
         if(rangeChecks.Length!=0){
             Transform target = rangeChecks[0].transform;
             Vector3 directionToTarget = (target.position - transform.position).normalized;
-            if(Vector3.Angle(transform.forward, directionToTarget) < angle / 2)
-            {
+            if(Vector3.Angle(transform.forward, directionToTarget) < angle / 2){
                 float distanceToTarget = Vector3.Distance(transform.position, target.position);
                 if(!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
                     canSeePlayer = true;
                 else
                     canSeePlayer = false;
-                    
             }
             else canSeePlayer = false;
         } else {
@@ -75,15 +57,17 @@ public class FOV : MonoBehaviour
         if (canSeePlayer) {
             timer += Time.deltaTime;
             if (timer >= 2f) {
-                spotlight.GetComponent<Light>().color = Color.red;
+                AIUIManager.UpdateUIOnDetection();
                 if(timer >= 2.3f){
+                    AIUIManager.UpdateUIOnDetection();
                     caught = true;
                     SceneManager.LoadScene(2);
                 }
             } else {
-                spotlight.GetComponent<Light>().color = Color.yellow;
+                AIUIManager.UpdateUIOnDetection();
             }
         } else {
+            AIUIManager.UpdateUIOnDetection();
             timer = 0f;
         }
     }
