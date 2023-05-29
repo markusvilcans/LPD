@@ -66,7 +66,7 @@ public class FOV : MonoBehaviour
             timer += Time.deltaTime;
             if (timer >= 2f) {
                 AIUIManager.UpdateUIOnDetection();
-                if(timer >= 2.3f){
+                if(timer >= 2.2f){
                     AIUIManager.UpdateUIOnDetection();
                     caught = true;
                     SceneManager.LoadScene(2);

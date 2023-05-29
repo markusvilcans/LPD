@@ -5,6 +5,7 @@ public class StartGameButton : MonoBehaviour
 {
     public GameObject startCanvas;
     public GameObject beginCanvas;
+    public GameObject tutorialCanvas;
 
     void Start(){
         startCanvas.SetActive(true);
@@ -15,6 +16,13 @@ public class StartGameButton : MonoBehaviour
     {
         startCanvas.SetActive(false);
         beginCanvas.SetActive(true);
+    }
+
+    public void ShowTutorial(){
+        tutorialCanvas.SetActive(true);
+        beginCanvas.SetActive(false);
+        startCanvas.SetActive(false);
+
     }
 
     public void StartGame(){
