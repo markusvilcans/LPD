@@ -15,6 +15,7 @@ public class FOV : MonoBehaviour
     public static bool caught;
     public float timer = 0f;
     public AIUIManager AIUIManager;
+    public float instaLoseDistance;
 
     void Start(){
         caught = false;
@@ -40,6 +41,13 @@ public class FOV : MonoBehaviour
         if(rangeChecks.Length!=0){
             Transform target = rangeChecks[0].transform;
             Vector3 directionToTarget = (target.position - transform.position).normalized;
+            float distanceToTargetInstaLose = Vector3.Distance(transform.position, target.position);
+            if (distanceToTargetInstaLose <= instaLoseDistance){
+                caught = true;
+                SceneManager.LoadScene(2);
+                return;
+            }
+
             if(Vector3.Angle(transform.forward, directionToTarget) < angle / 2){
                 float distanceToTarget = Vector3.Distance(transform.position, target.position);
                 if(!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
