@@ -13,6 +13,7 @@ public class AIUIManager : MonoBehaviour{
     private Sprite eyeGreenSprite;
     private Sprite eyeOrangeSprite;
     private Sprite eyeRedSprite;
+    
 
     void Start(){
         FOV[] aiArray = FindObjectsOfType<FOV>();
@@ -46,9 +47,9 @@ public class AIUIManager : MonoBehaviour{
         if (detectionImage != null){
             if (timerExpired)
                 detectionImage.sprite = eyeRedSprite;
-            else if (playerDetected)
+            else if (playerDetected){
                 detectionImage.sprite = eyeOrangeSprite;
-            else
+            } else
                 detectionImage.sprite = eyeGreenSprite;
         }
     }
