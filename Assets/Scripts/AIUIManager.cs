@@ -43,14 +43,10 @@ public class AIUIManager : MonoBehaviour{
                 }
             }
         }
-
-        if (detectionImage != null){
-            if (timerExpired)
-                detectionImage.sprite = eyeRedSprite;
-            else if (playerDetected){
-                detectionImage.sprite = eyeOrangeSprite;
-            } else
-                detectionImage.sprite = eyeGreenSprite;
-        }
+        if (timerExpired){
+            detectionImage.sprite = eyeRedSprite;
+        } else if (playerDetected){
+            detectionImage.sprite = eyeOrangeSprite;
+        } else detectionImage.sprite = eyeGreenSprite;
     }
 }

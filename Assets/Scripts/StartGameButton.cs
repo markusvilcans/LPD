@@ -6,10 +6,12 @@ public class StartGameButton : MonoBehaviour
     public GameObject startCanvas;
     public GameObject beginCanvas;
     public GameObject tutorialCanvas;
+    public GameObject tutorialCanvasTwo;
+    public GameObject tutorialCanvasThree;
+    public GameObject tutorialCanvasFour;
 
     void Start(){
         startCanvas.SetActive(true);
-        beginCanvas.SetActive(false);
     }
 
     public void BeginGame()
@@ -19,10 +21,23 @@ public class StartGameButton : MonoBehaviour
     }
 
     public void ShowTutorial(){
-        tutorialCanvas.SetActive(true);
         beginCanvas.SetActive(false);
-        startCanvas.SetActive(false);
+        tutorialCanvas.SetActive(true);
+    }
 
+    public void ShowTutorialTwo(){
+        tutorialCanvas.SetActive(false);
+        tutorialCanvasTwo.SetActive(true);
+    }
+
+    public void ShowTutorialThree(){
+        tutorialCanvasTwo.SetActive(false);
+        tutorialCanvasThree.SetActive(true);
+    }
+
+    public void ShowTutorialFour(){
+        tutorialCanvasThree.SetActive(false);
+        tutorialCanvasFour.SetActive(true);
     }
 
     public void StartGame(){

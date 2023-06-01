@@ -17,7 +17,7 @@ public class MuteButton : MonoBehaviour{
         isMuted = !isMuted;
         UpdateButtonImage();
         AudioSource audioSource = backgroundMusic.GetComponent<AudioSource>();
-        audioSource.volume = isMuted ? 0f : 1f;
+        audioSource.volume = isMuted ? 0f : 0.5f;
     }
 
     private void UpdateButtonImage(){
