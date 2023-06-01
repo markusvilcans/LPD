@@ -14,34 +14,33 @@ public class AI_Routing : MonoBehaviour{
     //private Rigidbody rb;
     Vector3 target;
 
-    void Start()
-{
-    string aiName = gameObject.name;
-    string patrolRouteObjectName = "PatrolRoute" + aiName;
-    GameObject patrolPointsObject = GameObject.Find("PatrolPoints");
-    if (patrolPointsObject == null)
-    {
-        Debug.LogError("PatrolPoints object not found in the scene!");
-        return;
-    }
-    Transform patrolRouteObject = patrolPointsObject.transform.Find(patrolRouteObjectName);
-    if (patrolRouteObject == null)
-    {
-        Debug.LogError("PatrolRoute object not found for AI: " + aiName);
-        return;
-    }
-    Transform[] waypoints = patrolRouteObject.GetComponentsInChildren<Transform>();
-    List<Transform> tempPatrolPoints = new List<Transform>();
-    foreach (Transform waypoint in waypoints)
-    {
-        if (waypoint != patrolRouteObject)
+    void Start(){
+        string aiName = gameObject.name;
+        string patrolRouteObjectName = "PatrolRoute" + aiName;
+        GameObject patrolPointsObject = GameObject.Find("PatrolPoints");
+        if (patrolPointsObject == null)
         {
-            tempPatrolPoints.Add(waypoint);
+            Debug.LogError("PatrolPoints object not found in the scene!");
+            return;
         }
+        Transform patrolRouteObject = patrolPointsObject.transform.Find(patrolRouteObjectName);
+        if (patrolRouteObject == null)
+        {
+            Debug.LogError("PatrolRoute object not found for AI: " + aiName);
+            return;
+        }
+        Transform[] waypoints = patrolRouteObject.GetComponentsInChildren<Transform>();
+        List<Transform> tempPatrolPoints = new List<Transform>();
+        foreach (Transform waypoint in waypoints)
+        {
+            if (waypoint != patrolRouteObject)
+            {
+                tempPatrolPoints.Add(waypoint);
+            }
+        }
+        patrolPoints = tempPatrolPoints.ToArray();
+        targetPoint = 0;
     }
-    patrolPoints = tempPatrolPoints.ToArray();
-    targetPoint = 0;
-}
 
 
 

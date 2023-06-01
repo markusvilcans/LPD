@@ -8,12 +8,10 @@ public class BackgroundMusicManager : MonoBehaviour{
 
     void Start(){
         audioSource = GetComponent<AudioSource>();
-
         backgroundMusicSongs = new AudioClip[5];
         for (int i = 0; i < 5; i++){
             backgroundMusicSongs[i] = Resources.Load<AudioClip>("music" + (i + 1));
         }
-
         currentIndex = Random.Range(0, backgroundMusicSongs.Length);
         PlaySong(currentIndex);
     }
@@ -28,7 +26,7 @@ public class BackgroundMusicManager : MonoBehaviour{
         if (!audioSource.isPlaying){
             currentIndex++;
             if (currentIndex >= backgroundMusicSongs.Length){
-                currentIndex = 0; // Reset back to the first song
+                currentIndex = 0;
             }
             PlaySong(currentIndex);
         }
