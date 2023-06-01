@@ -58,7 +58,7 @@ public class AI_Routing : MonoBehaviour{
             GetComponent<Animator>().SetBool("isWalking", true);
             Vector3 direction = patrolPoints[targetPoint].position - transform.position;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 3);
         }
         else{
             GetComponent<Animator>().SetBool("isWalking", false);
